@@ -6,13 +6,12 @@ import 'package:built_value/built_value.dart';
 
 part 'app_store.g.dart';
 
-
 // TestApp State
 abstract class TestAppState
     implements Built<TestAppState, TestAppStateBuilder> {
   factory TestAppState() => _$TestAppState._(
         useCaseTwoPageState: 0,
-        useCaseThreeText: "",
+        useCaseThreeText: '',
         useCaseThreeLockStatus: false,
         useCaseFourRouteIndex: 0,
       );
@@ -37,7 +36,7 @@ abstract class TestAppState
 
   // use case five data
   @nullable
-  BuiltList get useCaseFiveData;
+  BuiltList<String> get useCaseFiveData;
 }
 
 // TestApp Actions
@@ -59,22 +58,31 @@ abstract class TestAppActions extends ReduxActions {
   ActionDispatcher<List<String>> get useCaseFiveSetData;
 }
 
-
 // TestApp reducers
 ReducerBuilder<TestAppState, TestAppStateBuilder> reducerBuilder =
     new ReducerBuilder<TestAppState, TestAppStateBuilder>()
-      ..add(TestAppActionsNames.useCaseSetPage,
-          (s, a, b) => b.useCaseTwoPageState = a.payload)
-      ..add(TestAppActionsNames.useCaseThreeSetText,
-          (s, a, b) => b.useCaseThreeText = a.payload)
-      ..add(TestAppActionsNames.useCaseThreeSetLock,
-          (s, a, b) => b.useCaseThreeLockStatus = a.payload)
-      ..add(TestAppActionsNames.useCaseFourSetRouteIndex,
-          (s, a, b) => b.useCaseFourRouteIndex = a.payload)
-      ..add(TestAppActionsNames.useCaseFiveFetchData,
-          (s, a, b) => b..useCaseFiveStatus = true)
+      ..add(
+          TestAppActionsNames.useCaseSetPage,
+          (TestAppState s, Action<int> a, TestAppStateBuilder b) =>
+              b.useCaseTwoPageState = a.payload)
+      ..add(
+          TestAppActionsNames.useCaseThreeSetText,
+          (TestAppState s, Action<String> a, TestAppStateBuilder b) =>
+              b.useCaseThreeText = a.payload)
+      ..add(
+          TestAppActionsNames.useCaseThreeSetLock,
+          (TestAppState s, Action<bool> a, TestAppStateBuilder b) =>
+              b.useCaseThreeLockStatus = a.payload)
+      ..add(
+          TestAppActionsNames.useCaseFourSetRouteIndex,
+          (TestAppState s, Action<int> a, TestAppStateBuilder b) =>
+              b.useCaseFourRouteIndex = a.payload)
+      ..add(
+          TestAppActionsNames.useCaseFiveFetchData,
+          (TestAppState s, Action<int> a, TestAppStateBuilder b) =>
+              b..useCaseFiveStatus = true)
       ..add(
           TestAppActionsNames.useCaseFiveSetData,
-          (s, a, b) => b
+          (TestAppState s, Action<List<String>> a, TestAppStateBuilder b) => b
             ..useCaseFiveStatus = false
             ..useCaseFiveData = new BuiltList<String>(a.payload));

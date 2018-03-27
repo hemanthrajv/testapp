@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 AppBar appBarWithTitle(
-        [String title, List<Widget> actions = const [], String asset]) =>
+        [String title, List<Widget> actions = const <Widget>[], String asset]) =>
     new AppBar(
       title: new Text(title),
       actions: actions,

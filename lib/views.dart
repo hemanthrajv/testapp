@@ -9,7 +9,7 @@ import 'utils.dart';
 
 // Main App component
 class App extends StatelessWidget {
-  final Store store;
+  final Store<TestAppState, TestAppStateBuilder, TestAppActions> store;
 
   App({this.store});
 
@@ -18,11 +18,11 @@ class App extends StatelessWidget {
     return new ReduxProvider(
       store: store,
       child: new MaterialApp(
-        title: "Test App",
+        title: 'Test App',
         theme: new ThemeData(platform: TargetPlatform.iOS),
-        routes: {
+        routes: <String, WidgetBuilder>{
           '/': (_) => new HomePage(),
-          '/navigationOne': (_) => NavigationOneFlow.start,
+          '/navigationOne': (_) => start,
           '/navigationTwo': (_) => new NavigationTwo(),
           '/navigationThree': (_) => new NavigationThree(),
           '/navigationFour': (_) => new NavigationFour(),
@@ -39,22 +39,22 @@ class HomePage extends StatelessWidget {
   void _navigate(BuildContext context, int useCase) {
     switch (useCase) {
       case 1:
-        Navigator.of(context).pushNamed("/navigationOne");
+        Navigator.of(context).pushNamed('/navigationOne');
         break;
       case 2:
-        Navigator.of(context).pushNamed("/navigationTwo");
+        Navigator.of(context).pushNamed('/navigationTwo');
         break;
       case 3:
-        Navigator.of(context).pushNamed("/navigationThree");
+        Navigator.of(context).pushNamed('/navigationThree');
         break;
       case 4:
-        Navigator.of(context).pushNamed("/navigationFour");
+        Navigator.of(context).pushNamed('/navigationFour');
         break;
       case 5:
-        Navigator.of(context).pushNamed("/navigationFive");
+        Navigator.of(context).pushNamed('/navigationFive');
         break;
       case 6:
-        Navigator.of(context).pushNamed("/navigationSix");
+        Navigator.of(context).pushNamed('/navigationSix');
         break;
     }
   }
@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: appBarWithTitle("Home Page"),
+      appBar: appBarWithTitle('Home Page'),
       body: new Container(
         alignment: Alignment.center,
         child: new Column(
@@ -70,27 +70,27 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             new RaisedButton(
               onPressed: () => _navigate(context, 1),
-              child: new Text("Use Case 1"),
+              child: const Text('Use Case 1'),
             ),
             new RaisedButton(
               onPressed: () => _navigate(context, 2),
-              child: new Text("Use Case 2"),
+              child: const Text('Use Case 2'),
             ),
             new RaisedButton(
               onPressed: () => _navigate(context, 3),
-              child: new Text("Use Case 3"),
+              child: const Text('Use Case 3'),
             ),
             new RaisedButton(
               onPressed: () => _navigate(context, 4),
-              child: new Text("Use Case 4"),
+              child: const Text('Use Case 4'),
             ),
             new RaisedButton(
               onPressed: () => _navigate(context, 5),
-              child: new Text("Use Case 5"),
+              child: const Text('Use Case 5'),
             ),
             new RaisedButton(
               onPressed: () => _navigate(context, 6),
-              child: new Text("Use Case 6"),
+              child: const Text('Use Case 6'),
             ),
           ],
         ),
@@ -106,82 +106,81 @@ class HomePage extends StatelessWidget {
 typedef void ClickCallBack(BuildContext context);
 
 // Flow Based navigation demo
-class NavigationOneFlow {
-  static Widget start = new NavigationOneWidget(
-    title: "Screen A",
-    body: "Screen A",
-    next: "B",
-    callBack: (context) => Navigator.of(context).push(
-          new MaterialPageRoute<Null>(
-            builder: (_) {
-              return _screenB;
-            },
-            settings: new RouteSettings(name: "/screenB"),
-          ),
+
+final Widget start = new NavigationOneWidget(
+  title: 'Screen A',
+  body: 'Screen A',
+  next: 'B',
+  callBack: (BuildContext context) => Navigator.of(context).push(
+        new MaterialPageRoute<Null>(
+          builder: (BuildContext _) {
+            return _screenB;
+          },
+          settings: const RouteSettings(name: '/screenB'),
         ),
-  );
+      ),
+);
 
-  static Widget _screenB = new NavigationOneWidget(
-    title: "Screen B",
-    body: "Screen B",
-    next: "C",
-    callBack: (context) => Navigator.of(context).push(
-          new MaterialPageRoute(
-            builder: (_) {
-              return _screenC;
-            },
-            settings: new RouteSettings(name: "/screenC"),
-          ),
+final Widget _screenB = new NavigationOneWidget(
+  title: 'Screen B',
+  body: 'Screen B',
+  next: 'C',
+  callBack: (BuildContext context) => Navigator.of(context).push(
+        new MaterialPageRoute<Null>(
+          builder: (BuildContext _) {
+            return _screenC;
+          },
+          settings: const RouteSettings(name: '/screenC'),
         ),
-  );
+      ),
+);
 
-  static Widget _screenC = new NavigationOneWidget(
-    title: "Screen C",
-    body: "Screen C",
-    next: "M",
-    callBack: (context) => Navigator.of(context).push(
-          new MaterialPageRoute(
-            builder: (_) {
-              return _modalM;
-            },
-            fullscreenDialog: true,
-            settings: new RouteSettings(name: "/modalM"),
-          ),
+final Widget _screenC = new NavigationOneWidget(
+  title: 'Screen C',
+  body: 'Screen C',
+  next: 'M',
+  callBack: (BuildContext context) => Navigator.of(context).push(
+        new MaterialPageRoute<Null>(
+          builder: (BuildContext _) {
+            return _modalM;
+          },
+          fullscreenDialog: true,
+          settings: const RouteSettings(name: '/modalM'),
         ),
-  );
+      ),
+);
 
-  static Widget _modalM = new NavigationOneWidget(
-    title: "Modal M",
-    body: "Modal M",
-    next: "N",
-    callBack: (context) => Navigator.of(context).push(
-          new MaterialPageRoute(
-            builder: (_) {
-              return _screenN;
-            },
-            maintainState: false,
-            settings: new RouteSettings(name: "/screenN"),
-          ),
+final Widget _modalM = new NavigationOneWidget(
+  title: 'Modal M',
+  body: 'Modal M',
+  next: 'N',
+  callBack: (BuildContext context) => Navigator.of(context).push(
+        new MaterialPageRoute<Null>(
+          builder: (_) {
+            return _screenN;
+          },
+          maintainState: false,
+          settings: const RouteSettings(name: '/screenN'),
         ),
-  );
+      ),
+);
 
-  static Widget _screenN = new NavigationOneWidget(
-    title: "Screen N",
-    body: "Screen N",
-    next: "D",
-    callBack: (context) async {
-      Navigator.of(context).pushAndRemoveUntil(
-          new MaterialPageRoute(builder: (_) {
-        return _screenD;
-      }), ModalRoute.withName("/navigationOne"));
-    },
-  );
+final Widget _screenN = new NavigationOneWidget(
+  title: 'Screen N',
+  body: 'Screen N',
+  next: 'D',
+  callBack: (BuildContext context) async {
+    Navigator.of(context).pushAndRemoveUntil(
+        new MaterialPageRoute<Null>(builder: (_) {
+      return _screenD;
+    }), ModalRoute.withName('/navigationOne'));
+  },
+);
 
-  static Widget _screenD = new NavigationOneWidget(
-    title: "Screen D",
-    body: "Screen D",
-  );
-}
+const Widget _screenD = const NavigationOneWidget(
+  title: 'Screen D',
+  body: 'Screen D',
+);
 
 // Common widget used for Navigation Use Case One
 class NavigationOneWidget extends StatelessWidget {
@@ -190,13 +189,13 @@ class NavigationOneWidget extends StatelessWidget {
   final String next;
   final ClickCallBack callBack;
 
-  NavigationOneWidget({this.title, this.body, this.callBack, this.next});
+  const NavigationOneWidget({this.title, this.body, this.callBack, this.next});
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: appBarWithTitle(this.title),
-      body: bodyWithText(this.body),
+      appBar: appBarWithTitle(title),
+      body: bodyWithText(body),
       floatingActionButton: callBack != null
           ? new FloatingActionButton(
               onPressed: () => callBack(context),
@@ -212,17 +211,21 @@ class NavigationOneWidget extends StatelessWidget {
 // Navigation UseCase Two
 class NavigationTwo extends StatelessWidget {
   String _getName(int index) {
-    if (index == 0) return "Screen A";
-    if (index == 1) return "Screen B";
-    return "Screen C";
+    if (index == 0) {
+      return 'Screen A';
+    }
+    if (index == 1) {
+      return 'Screen B';
+    }
+    return 'Screen C';
   }
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnection<TestAppState, TestAppActions, int>(
-      connect: (state) => state.useCaseTwoPageState,
+      connect: (TestAppState state) => state.useCaseTwoPageState,
       builder: (BuildContext context, int s, TestAppActions a) => new Scaffold(
-            appBar: appBarWithTitle("Use Case 2"),
+            appBar: appBarWithTitle('Use Case 2'),
             body: new Container(
                 alignment: Alignment.center,
                 child: new Column(
@@ -234,12 +237,12 @@ class NavigationTwo extends StatelessWidget {
                           : new RaisedButton.icon(
                               onPressed: () {
                                 Navigator.of(context).push(
-                                  new MaterialPageRoute(
+                                  new MaterialPageRoute<Null>(
                                       builder: (BuildContext context) {
                                     return new Scaffold(
-                                      appBar: appBarWithTitle("Screen D"),
-                                      body: new Center(
-                                        child: new Text("Screen D"),
+                                      appBar: appBarWithTitle('Screen D'),
+                                      body: const Center(
+                                        child: const Text('Screen D'),
                                       ),
                                       floatingActionButton:
                                           new FloatingActionButton(
@@ -247,7 +250,7 @@ class NavigationTwo extends StatelessWidget {
                                           a.useCaseSetPage(s == 0 ? 1 : 0);
                                           Navigator.of(context).pop();
                                         },
-                                        child: new Text(s == 0 ? "B" : "A"),
+                                        child: new Text(s == 0 ? 'B' : 'A'),
                                       ),
                                     );
                                   }),
@@ -256,7 +259,7 @@ class NavigationTwo extends StatelessWidget {
                               icon: s == 0
                                   ? new Icon(Icons.home)
                                   : new Icon(Icons.star),
-                              label: new Text("Screen D"),
+                              label: const Text('Screen D'),
                             ),
                     ),
                     new Flexible(
@@ -269,12 +272,14 @@ class NavigationTwo extends StatelessWidget {
                 onTap: (int index) => a.useCaseSetPage(index),
                 items: <BottomNavigationBarItem>[
                   new BottomNavigationBarItem(
-                      icon: new Icon(Icons.home), title: new Text("Screen A")),
+                      icon: new Icon(Icons.home),
+                      title: const Text('Screen A')),
                   new BottomNavigationBarItem(
-                      icon: new Icon(Icons.star), title: new Text("Screen B")),
+                      icon: new Icon(Icons.star),
+                      title: const Text('Screen B')),
                   new BottomNavigationBarItem(
                       icon: new Icon(Icons.play_arrow),
-                      title: new Text("Screen C"))
+                      title: const Text('Screen C'))
                 ]),
           ),
     );
@@ -289,21 +294,23 @@ class NavigationThree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new StoreConnection<TestAppState, TestAppActions, Map>(
-        connect: (state) => {
-              "status": state.useCaseThreeLockStatus,
-              "text": state.useCaseThreeText
+    return new StoreConnection<TestAppState, TestAppActions,
+            Map<String, dynamic>>(
+        connect: (TestAppState state) => <String, dynamic>{
+              'status': state.useCaseThreeLockStatus,
+              'text': state.useCaseThreeText
             },
-        builder: (BuildContext context, Map s, TestAppActions a) {
+        builder:
+            (BuildContext context, Map<String, dynamic> s, TestAppActions a) {
           if (_controller == null) {
-            _controller = new TextEditingController(text: s["text"]);
+            _controller = new TextEditingController(text: s['text']);
             _controller
                 .addListener(() => a.useCaseThreeSetText(_controller.text));
           }
 
           List<Widget> _children = <Widget>[
             new Scaffold(
-              appBar: appBarWithTitle("Use Case 3", [
+              appBar: appBarWithTitle('Use Case 3', <Widget>[
                 new IconButton(
                     icon: new Icon(Icons.lock_open),
                     onPressed: () => a.useCaseThreeSetLock(true))
@@ -328,7 +335,7 @@ class NavigationThree extends StatelessWidget {
             ),
           ];
 
-          _children = s["status"] ? _children : _children.reversed.toList();
+          _children = s['status'] ? _children : _children.reversed.toList();
 
           return new Stack(
             children: _children,
@@ -342,15 +349,23 @@ class NavigationThree extends StatelessWidget {
 // Use Case Four Navigation demo
 class NavigationFour extends StatelessWidget {
   Color _getColorForIndex(int index) {
-    if (index == 0) return new Color(0xffdf717e);
-    if (index == 1) return new Color(0xfffff8a8);
-    return new Color(0xffddbd73);
+    if (index == 0) {
+      return const Color(0xffdf717e);
+    }
+    if (index == 1) {
+      return const Color(0xfffff8a8);
+    }
+    return const Color(0xffddbd73);
   }
 
   Color _getColorForText(int index) {
-    if (index == 0) return new Color(0xffdc143c);
-    if (index == 1) return new Color(0xff987847);
-    return new Color(0xff2a4390);
+    if (index == 0) {
+      return const Color(0xffdc143c);
+    }
+    if (index == 1) {
+      return const Color(0xff987847);
+    }
+    return const Color(0xff2a4390);
   }
 
   List<BottomNavigationBarItem> _getBottomBarForIndex(int index) {
@@ -365,23 +380,23 @@ class NavigationFour extends StatelessWidget {
       one = Icons.settings;
       two = Icons.computer;
       three = Icons.warning;
-      textOne = "b1/t1";
-      textTwo = "b1/t2";
-      textThree = "b1/t3";
+      textOne = 'b1/t1';
+      textTwo = 'b1/t2';
+      textThree = 'b1/t3';
     } else if (index == 1) {
       one = Icons.contact_mail;
       two = Icons.folder;
       three = Icons.sort;
-      textOne = "b2/t1";
-      textTwo = "b2/t2";
-      textThree = "b2/t3";
+      textOne = 'b2/t1';
+      textTwo = 'b2/t2';
+      textThree = 'b2/t3';
     } else {
       one = Icons.home;
       two = Icons.headset_mic;
       three = Icons.file_upload;
-      textOne = "b3/t1";
-      textTwo = "b3/t2";
-      textThree = "b3/t3";
+      textOne = 'b3/t1';
+      textTwo = 'b3/t2';
+      textThree = 'b3/t3';
     }
 
     return <BottomNavigationBarItem>[
@@ -394,7 +409,7 @@ class NavigationFour extends StatelessWidget {
     ];
   }
 
-  List<String> _imageAsstes = [
+  final List<String> _imageAsstes = <String>[
     'assets/coffee_01.jpg',
     'assets/coffee_02.jpg',
     'assets/coffee_03.webp'
@@ -403,7 +418,7 @@ class NavigationFour extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new StoreConnection<TestAppState, TestAppActions, int>(
-        connect: (state) => state.useCaseFourRouteIndex,
+        connect: (TestAppState state) => state.useCaseFourRouteIndex,
         builder: (BuildContext context, int s, TestAppActions a) {
           final Drawer _drawer = new Drawer(
             child: new Container(
@@ -427,8 +442,8 @@ class NavigationFour extends StatelessWidget {
                     child: new Row(
                       children: <Widget>[
                         new Icon(Icons.code),
-                        new Text(
-                          " Button 1",
+                        const Text(
+                          ' Button 1',
                         ),
                       ],
                     ),
@@ -441,8 +456,8 @@ class NavigationFour extends StatelessWidget {
                     child: new Row(
                       children: <Widget>[
                         new Icon(Icons.palette),
-                        new Text(
-                          " Button 2",
+                        const Text(
+                          ' Button 2',
                         ),
                       ],
                     ),
@@ -455,8 +470,8 @@ class NavigationFour extends StatelessWidget {
                     child: new Row(
                       children: <Widget>[
                         new Icon(Icons.wb_sunny),
-                        new Text(
-                          " Button 3",
+                        const Text(
+                          ' Button 3',
                         ),
                       ],
                     ),
@@ -469,8 +484,8 @@ class NavigationFour extends StatelessWidget {
           return new Scaffold(
             drawer: _drawer,
             appBar: appBarWithTitle(
-                "",
-                [
+                '',
+                <Widget>[
                   new IconButton(
                     icon: new Icon(Icons.location_on),
                     onPressed: () => null,
@@ -500,30 +515,33 @@ class NavigationFour extends StatelessWidget {
 class NavigationFive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new StoreConnection<TestAppState, TestAppActions, Map>(
-        connect: (state) =>
-            {"loading": state.useCaseFiveStatus, "data": state.useCaseFiveData},
-        builder: (BuildContext context, Map s, TestAppActions a) {
-          if (s["loading"] == null) {
-            new Future.delayed(new Duration(seconds: 5), () {
-              a.useCaseFiveSetData(const ["a", "b", "c"]);
-              Navigator
-                  .of(context)
-                  .push(new MaterialPageRoute(builder: (BuildContext context) {
+    return new StoreConnection<TestAppState, TestAppActions,
+            Map<String, dynamic>>(
+        connect: (TestAppState state) => <String, dynamic>{
+              'loading': state.useCaseFiveStatus,
+              'data': state.useCaseFiveData
+            },
+        builder:
+            (BuildContext context, Map<String, dynamic> s, TestAppActions a) {
+          if (s['loading'] == null) {
+            new Future<void>.delayed(new Duration(seconds: 5), () {
+              a.useCaseFiveSetData(const <String>['a', 'b', 'c']);
+              Navigator.of(context).push(
+                  new MaterialPageRoute<Null>(builder: (BuildContext context) {
                 return new Scaffold(
-                  appBar: appBarWithTitle("Screen B"),
+                  appBar: appBarWithTitle('Screen B'),
                 );
               }));
             });
           }
 
           return new Scaffold(
-              appBar: appBarWithTitle("Use Case 5"),
-              body: s["loading"] == null || s["loading"]
-                  ? new Center(
-                      child: new CircularProgressIndicator(),
+              appBar: appBarWithTitle('Use Case 5'),
+              body: s['loading'] == null || s['loading']
+                  ? const Center(
+                      child: const CircularProgressIndicator(),
                     )
-                  : bodyWithText("Loading Done."));
+                  : bodyWithText('Loading Done.'));
         });
   }
 }
@@ -535,21 +553,21 @@ class NavigationSix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: appBarWithTitle("Use Case 6"),
+      appBar: appBarWithTitle('Use Case 6'),
       floatingActionButton: new FloatingActionButton(
         onPressed: () => Navigator.of(context).push(
-              new MaterialPageRoute(
+              new MaterialPageRoute<Null>(
                 builder: (_) => new Scaffold(
-                      appBar: appBarWithTitle("Screen 6"),
-                      body: new Center(
-                        child: new TextField(
+                      appBar: appBarWithTitle('Screen 6'),
+                      body: const Center(
+                        child: const TextField(
                           autofocus: true,
                         ),
                       ),
                     ),
               ),
             ),
-        child: new Text("B"),
+        child: const Text('B'),
       ),
     );
   }

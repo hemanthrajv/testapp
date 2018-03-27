@@ -5,7 +5,8 @@ import 'app_store.dart';
 import 'views.dart';
 
 void main() {
-  final store = new Store(
+  final Store<TestAppState,TestAppStateBuilder,TestAppActions> store =
+      new Store<TestAppState, TestAppStateBuilder, TestAppActions>(
     reducerBuilder.build(),
     new TestAppState(),
     new TestAppActions(),

@@ -26,7 +26,7 @@ class _$TestAppState extends TestAppState {
   @override
   final bool useCaseFiveStatus;
   @override
-  final BuiltList useCaseFiveData;
+  final BuiltList<String> useCaseFiveData;
 
   factory _$TestAppState([void updates(TestAppStateBuilder b)]) =>
       (new TestAppStateBuilder()..update(updates)).build();
@@ -126,9 +126,9 @@ class TestAppStateBuilder
   set useCaseFiveStatus(bool useCaseFiveStatus) =>
       _$this._useCaseFiveStatus = useCaseFiveStatus;
 
-  BuiltList _useCaseFiveData;
-  BuiltList get useCaseFiveData => _$this._useCaseFiveData;
-  set useCaseFiveData(BuiltList useCaseFiveData) =>
+  BuiltList<String> _useCaseFiveData;
+  BuiltList<String> get useCaseFiveData => _$this._useCaseFiveData;
+  set useCaseFiveData(BuiltList<String> useCaseFiveData) =>
       _$this._useCaseFiveData = useCaseFiveData;
 
   TestAppStateBuilder();
@@ -159,7 +159,7 @@ class TestAppStateBuilder
 
   @override
   _$TestAppState build() {
-    final _$result = _$v ??
+    final _$TestAppState _$result = _$v ??
         new _$TestAppState._(
             useCaseTwoPageState: useCaseTwoPageState,
             useCaseThreeText: useCaseThreeText,

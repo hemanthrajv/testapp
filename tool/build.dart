@@ -5,14 +5,14 @@ import 'package:built_value_generator/built_value_generator.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:built_redux/generator.dart';
 
-Future main(List<String> args) async {
-  await build([
+Future<Null> main(List<String> args) async {
+  await build(<BuildAction>[
     new BuildAction(
-        new PartBuilder([
-          new BuiltValueGenerator(),
+        new PartBuilder(<Generator>[
+          const BuiltValueGenerator(),
           new BuiltReduxGenerator(),
         ]),
         'test_app',
-        inputs: const ['lib/*.dart'])
+        inputs: const <String>['lib/*.dart'])
   ], deleteFilesByDefault: true);
 }
